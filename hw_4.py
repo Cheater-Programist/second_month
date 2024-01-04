@@ -11,36 +11,38 @@ g = GeeksPeople("Asd", "asd@gmail.com", "0987655433")
 print(g)
 
 class Student(GeeksPeople):
-    def __init__(self, name, email, phone, student_id, group_where_study):
+    def __init__(self, name, email, phone, student_id):
         super().__init__(name, email, phone)
         self.student_id = student_id
-        self.group_where_study = group_where_study
+        self.group_where_study = []
 
     def __str__(self):
         return f"{g}, Id: {self.student_id}"
 
-    def study(self):
-        print(f"In {self.group_where_study}")
+    def study(self, group):
+        self.group_where_study.append(group)
+        print(f"Studies in {self.group_where_study}")
 
-s = Student("Asd", "asd@gmail.com", "0987655433", 3, "math")
+s = Student("Asd", "asd@gmail.com", "0987655433", 3)
 print(s)
-s.study()
+s.study("Math")
 
 class Teacher(GeeksPeople):
-    def __init__(self, name, email, phone, teacher_id, group_where_teach):
+    def __init__(self, name, email, phone, teacher_id):
         super().__init__(name, email, phone)
         self.teacher_id = teacher_id
-        self.group_where_teach = group_where_teach
+        self.group_where_teach = []
 
     def __str__(self):
         return f"{g}, Id: {self.teacher_id}"
 
-    def teach(self):
+    def teach(self, group):
+        self.group_where_teach.append(group)
         print(f"Teaches {self.group_where_teach}")
 
-t = Teacher("Asd", "asd@gmail.com", "0987655433", 3, "math")
+t = Teacher("Asd", "asd@gmail.com", "0987655433", 3)
 print(t)
-t.teach()
+t.teach("Eng")
 
 class Admin(GeeksPeople):
     def __init__(self, name, email, phone, admin_id):
@@ -62,10 +64,12 @@ a.create_group()
 print(a.groups)
 
 class Mentor(Student, Teacher):
-    pass
+    def __init__(self, name, email, phone, student_id, teacher_id):
+        Student.__init__(self, name, email, phone, student_id)
+        Teacher.__init__(self, name, email, phone, teacher_id)
 
     def __str__(self):
-        return f"{g}, Id: {self.student_id}, {self.group_where_teach}"
+        return f"{g}, Id: {self.student_id}, Teacher id: {self.teacher_id}"
     
-# m = Mentor(name=s.name, email=s.email, phone=s.phone, student_id=s.student_id)
-print()
+m = Mentor("A", "A@gmail.com", "0552878777", 1, 2)
+print(m)
